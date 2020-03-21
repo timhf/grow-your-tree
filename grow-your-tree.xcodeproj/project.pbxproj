@@ -113,6 +113,8 @@
 				97C5B4FB24264F5E00C463A5 /* grow-your-tree.entitlements */,
 				97C5B4C224260E4600C463A5 /* AppDelegate.swift */,
 				97C5B4C424260E4600C463A5 /* ViewController.swift */,
+				97C5B4F724264CCF00C463A5 /* RankingView.swift */,
+				97C5B4F924264CD900C463A5 /* ChallengesView.swift */,
 				97C5B4C624260E4600C463A5 /* Main.storyboard */,
 				97C5B4CC24260E4800C463A5 /* Assets.xcassets */,
 				97C5B4CE24260E4800C463A5 /* LaunchScreen.storyboard */,
@@ -120,8 +122,6 @@
 				97C5B4C924260E4600C463A5 /* grow_your_tree.xcdatamodeld */,
 				97C5B4F32426125700C463A5 /* images.xcassets */,
 				97C5B4F5242642C400C463A5 /* Network.swift */,
-				97C5B4F724264CCF00C463A5 /* RankingView.swift */,
-				97C5B4F924264CD900C463A5 /* ChallengesView.swift */,
 				97C5B4FC24265B5C00C463A5 /* ThisUser.swift */,
 			);
 			path = "grow-your-tree";

@@ -30,6 +30,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var homeLocation = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     var timer = Timer()
     var score : Int = 0
+    var internalRanking : [Network.UserItem] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +59,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func buttonTest(_ sender: Any) {
-        
+
+
+    }
+    
+    @IBAction func rankingButton(_ sender: Any) {
+        //self.performSegue(withIdentifier: "rankingViewSegue", sender: self)
     }
     
     func loadSettings() {
@@ -81,6 +87,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @objc func updateDisplay() {
         score_label.text = String(format: "Score: %d", arguments: [score])
         score += 1
+        
+        self.internalRanking = network.getRanking(places: 5)
     }
     
     func updateLocation() {
@@ -97,7 +105,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         updateDisplay()
     }
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "rankingViewSegue"){
+            let rankingView = segue.destination as! RankingView
+            rankingView.ranking = self.internalRanking
+        }
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         print("locations = \(locValue.latitude) \(locValue.longitude)")
@@ -114,6 +129,5 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("\(error.localizedDescription)")
     }
-    
 }
 

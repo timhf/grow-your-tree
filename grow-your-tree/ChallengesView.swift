@@ -11,8 +11,6 @@ import UIKit
 
 
 class ChallengesView : UIViewController {
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
