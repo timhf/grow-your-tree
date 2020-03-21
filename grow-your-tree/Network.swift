@@ -10,7 +10,7 @@ import Foundation
 
 class Network {
     
-    let data_url = "0fcddb9b.ngrok.io"
+    let data_url = "http://508212e7.ngrok.io"
     
     var ranking : [RankingItem] = []
     
@@ -47,7 +47,7 @@ class Network {
                 if let data = data {
                     do {
                         let res = try JSONDecoder().decode(RankingItem.self, from: data)
-                     
+                    
                     } catch let error {
                         
                     }

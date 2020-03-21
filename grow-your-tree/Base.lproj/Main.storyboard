@@ -38,6 +38,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="51"/>
                                 <state key="normal" title="💧"/>
+                                <connections>
+                                    <action selector="buttonTest:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bAd-Ef-E67"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WdS-2A-Sw5">
                                 <rect key="frame" x="304" y="59" width="55" height="73"/>
