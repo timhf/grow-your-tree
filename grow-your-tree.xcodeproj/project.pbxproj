@@ -15,6 +15,7 @@
 		97C5B4D024260E4800C463A5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C5B4CE24260E4800C463A5 /* LaunchScreen.storyboard */; };
 		97C5B4DB24260E4800C463A5 /* grow_your_treeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C5B4DA24260E4800C463A5 /* grow_your_treeTests.swift */; };
 		97C5B4E624260E4800C463A5 /* grow_your_treeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C5B4E524260E4800C463A5 /* grow_your_treeUITests.swift */; };
+		97C5B4F42426125700C463A5 /* images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C5B4F32426125700C463A5 /* images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		97C5B4E124260E4800C463A5 /* grow-your-treeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "grow-your-treeUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		97C5B4E524260E4800C463A5 /* grow_your_treeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = grow_your_treeUITests.swift; sourceTree = "<group>"; };
 		97C5B4E724260E4800C463A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		97C5B4F32426125700C463A5 /* images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				97C5B4CE24260E4800C463A5 /* LaunchScreen.storyboard */,
 				97C5B4D124260E4800C463A5 /* Info.plist */,
 				97C5B4C924260E4600C463A5 /* grow_your_tree.xcdatamodeld */,
+				97C5B4F32426125700C463A5 /* images.xcassets */,
 			);
 			path = "grow-your-tree";
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97C5B4D024260E4800C463A5 /* LaunchScreen.storyboard in Resources */,
+				97C5B4F42426125700C463A5 /* images.xcassets in Resources */,
 				97C5B4CD24260E4800C463A5 /* Assets.xcassets in Resources */,
 				97C5B4C824260E4600C463A5 /* Main.storyboard in Resources */,
 			);
