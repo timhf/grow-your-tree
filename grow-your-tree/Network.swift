@@ -12,50 +12,57 @@ class Network {
     
     let data_url = "http://508212e7.ngrok.io"
     
-    var ranking : [RankingItem] = []
+    var ranking = RankingItem(users: [:])
+    var dataReady : Bool = false
     
     struct UserItem : Decodable{
         let score: Int
         let username: String
+        let location: String
     }
     struct RankingItem : Decodable {
-        let rank: Int
-        let user: UserItem
+        let users: [String:UserItem]
     }
     
     init() {
         //init connections...
-        
-        self.load_data()
+        getHttpData(urlAddress: data_url)
     }
-    
-    func init_with_dummy_data(){
-        ranking.append(RankingItem(rank: 1, user: UserItem(score: 3000, username: "tim")))
-        ranking.append(RankingItem(rank: 2, user: UserItem(score: 1234, username: "hans")))
-        ranking.append(RankingItem(rank: 3, user: UserItem(score: 7355, username: "simon")))
-        ranking.append(RankingItem(rank: 4, user: UserItem(score: 2355, username: "peter")))
-        ranking.append(RankingItem(rank: 5, user: UserItem(score: 6533, username: "lorenz")))
-    }
-    
-    func refresh(){
-        
-    }
-    
-    func load_data(){
-        if let url = URL(string: data_url) {
-            URLSession.shared.dataTask(with: url) { data, response, error in
-                if let data = data {
-                    do {
-                        let res = try JSONDecoder().decode(RankingItem.self, from: data)
-                    
-                    } catch let error {
-                        
-                    }
-                }
-            }.resume()
-        } else {
-            print("Error in URL?")
+
+    func getHttpData(urlAddress : String)
+    {
+        // Asynchronous Http call to your api url, using NSURLSession:
+        guard let url = URL(string: urlAddress) else
+        {
+            print("Url conversion issue.")
+            return
         }
+        URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) -> Void in
+            // Check if data was received successfully
+            if error == nil && data != nil {
+                do {
+                    // Convert NSData to Dictionary where keys are of type String, and values are of any type
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    
+                    var d = String(data: data!, encoding: .utf8)
+                    d = "{\"users\":" + d! + "}"
+                    
+                    ranking = try decoder.decode(RankingItem.self, from: (d?.data(using: .utf8)!)!)
+                    print(ranking)
+                    
+                    // Access specific key with value of type String
+                    // let str = json["key"] as! String0
+                } catch {
+                    print(error)
+                    // Something went wrong
+                }
+            }
+            else if error != nil
+            {
+                print(error)
+            }
+        }).resume()
     }
 }
 
