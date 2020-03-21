@@ -16,6 +16,10 @@
 		97C5B4DB24260E4800C463A5 /* grow_your_treeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C5B4DA24260E4800C463A5 /* grow_your_treeTests.swift */; };
 		97C5B4E624260E4800C463A5 /* grow_your_treeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C5B4E524260E4800C463A5 /* grow_your_treeUITests.swift */; };
 		97C5B4F42426125700C463A5 /* images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C5B4F32426125700C463A5 /* images.xcassets */; };
+		97C5B4F6242642C400C463A5 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C5B4F5242642C400C463A5 /* Network.swift */; };
+		97C5B4F824264CCF00C463A5 /* RankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C5B4F724264CCF00C463A5 /* RankingView.swift */; };
+		97C5B4FA24264CD900C463A5 /* ChallengesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C5B4F924264CD900C463A5 /* ChallengesView.swift */; };
+		97C5B4FD24265B5C00C463A5 /* ThisUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C5B4FC24265B5C00C463A5 /* ThisUser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +55,11 @@
 		97C5B4E524260E4800C463A5 /* grow_your_treeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = grow_your_treeUITests.swift; sourceTree = "<group>"; };
 		97C5B4E724260E4800C463A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97C5B4F32426125700C463A5 /* images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = images.xcassets; sourceTree = "<group>"; };
+		97C5B4F5242642C400C463A5 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		97C5B4F724264CCF00C463A5 /* RankingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingView.swift; sourceTree = "<group>"; };
+		97C5B4F924264CD900C463A5 /* ChallengesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesView.swift; sourceTree = "<group>"; };
+		97C5B4FB24264F5E00C463A5 /* grow-your-tree.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "grow-your-tree.entitlements"; sourceTree = "<group>"; };
+		97C5B4FC24265B5C00C463A5 /* ThisUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThisUser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +110,7 @@
 		97C5B4C124260E4600C463A5 /* grow-your-tree */ = {
 			isa = PBXGroup;
 			children = (
+				97C5B4FB24264F5E00C463A5 /* grow-your-tree.entitlements */,
 				97C5B4C224260E4600C463A5 /* AppDelegate.swift */,
 				97C5B4C424260E4600C463A5 /* ViewController.swift */,
 				97C5B4C624260E4600C463A5 /* Main.storyboard */,
@@ -109,6 +119,10 @@
 				97C5B4D124260E4800C463A5 /* Info.plist */,
 				97C5B4C924260E4600C463A5 /* grow_your_tree.xcdatamodeld */,
 				97C5B4F32426125700C463A5 /* images.xcassets */,
+				97C5B4F5242642C400C463A5 /* Network.swift */,
+				97C5B4F724264CCF00C463A5 /* RankingView.swift */,
+				97C5B4F924264CD900C463A5 /* ChallengesView.swift */,
+				97C5B4FC24265B5C00C463A5 /* ThisUser.swift */,
 			);
 			path = "grow-your-tree";
 			sourceTree = "<group>";
@@ -199,6 +213,11 @@
 				TargetAttributes = {
 					97C5B4BE24260E4600C463A5 = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.AccessWiFi = {
+								enabled = 0;
+							};
+						};
 					};
 					97C5B4D524260E4800C463A5 = {
 						CreatedOnToolsVersion = 10.1;
@@ -263,8 +282,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97C5B4FA24264CD900C463A5 /* ChallengesView.swift in Sources */,
 				97C5B4C524260E4600C463A5 /* ViewController.swift in Sources */,
 				97C5B4C324260E4600C463A5 /* AppDelegate.swift in Sources */,
+				97C5B4F824264CCF00C463A5 /* RankingView.swift in Sources */,
+				97C5B4FD24265B5C00C463A5 /* ThisUser.swift in Sources */,
+				97C5B4F6242642C400C463A5 /* Network.swift in Sources */,
 				97C5B4CB24260E4600C463A5 /* grow_your_tree.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
