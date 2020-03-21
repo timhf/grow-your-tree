@@ -44,6 +44,32 @@ class Network {
         return returnItem
     }
     
+    func findScore(userName:String) -> Int{
+        for (_, user) in self.ranking.users{
+            if user.username == userName {
+                return user.score
+            }
+        }
+        
+        return 0
+    }
+    
+    func isDataReady() -> Bool {
+        return dataReady
+    }
+    
+    func updateScore(userName:String, score:Int) {
+        let surl = String(format: "%@/%@/%@", data_url, userName, String(score))
+        let url = URL(string: surl)!
+        
+        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+            guard let data = data else { return }
+            print(String(data: data, encoding: .utf8)!)
+        }
+        
+        task.resume()
+    }
+    
     func getHttpData(urlAddress : String)
     {
         // Asynchronous Http call to your api url, using NSURLSession:
@@ -65,6 +91,7 @@ class Network {
                     
                     self.ranking = try decoder.decode(RankingItem.self, from: (d?.data(using: .utf8)!)!)
                     print(self.ranking)
+                    self.dataReady = true
                 } catch {
                     print(error)
                     // Something went wrong

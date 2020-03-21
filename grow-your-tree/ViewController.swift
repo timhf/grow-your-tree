@@ -31,6 +31,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var timer = Timer()
     var score : Int = 0
     var internalRanking : [Network.UserItem] = []
+    
+    let currentUserName = "Tim"
+    var delayCounter = 0
+    var scoreFeteched = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,8 +63,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func buttonTest(_ sender: Any) {
-
-
+        // 
     }
     
     @IBAction func rankingButton(_ sender: Any) {
@@ -85,10 +88,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @objc func updateDisplay() {
-        score_label.text = String(format: "Score: %d", arguments: [score])
-        score += 1
+        if (network.dataReady){
+            if(!scoreFeteched){
+                score = network.findScore(userName: currentUserName)
+                scoreFeteched = true
+            }
+            
+            score_label.text = String(format: "Score: %d", arguments: [score])
+            score += 1
+            
+            delayCounter += 1
+        } else {
+            score_label.text = "Looking for network..."
+        }
         
-        self.internalRanking = network.getRanking(places: 5)
+        if (delayCounter > 50){
+            network.updateScore(userName: currentUserName, score: score)
+            delayCounter = 0
+        }
     }
     
     func updateLocation() {
@@ -101,6 +118,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         {
             // start the timer
             timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateDisplay), userInfo: nil, repeats: true)
+            
         }
         
         updateDisplay()
@@ -108,6 +126,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "rankingViewSegue"){
+            self.internalRanking = network.getRanking(places: 5)
+            // fixme perform update
             let rankingView = segue.destination as! RankingView
             rankingView.ranking = self.internalRanking
         }
