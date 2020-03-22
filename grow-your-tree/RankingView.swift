@@ -97,7 +97,7 @@ class RankingView : UIViewController, UITableViewDataSource, UITableViewDelegate
         let lvl = Level(score: score)
         
         let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "customannotation")
-        annotationView.image = lvl.treeImage.resized(toWidth: 30)
+        annotationView.image = lvl.treeImage.resized(toWidth: 50)
         annotationView.canShowCallout = true
         
         return annotationView
