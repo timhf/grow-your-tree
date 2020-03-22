@@ -10,15 +10,21 @@ import Foundation
 
 class Network {
     
-    let data_url = "http://f89b7efa.ngrok.io"
+    let data_url = "http://3333cba4.ngrok.io"
     
     var ranking = RankingItem(users: [:])
     var dataReady : Bool = false
     
     struct UserItem : Decodable{
-        let score: Int
-        let username: String
-        let location: [Double] // lat and long
+        var score: Int
+        var username: String
+        var location: [Double] // lat and long
+        
+        init(score:Int, username:String, location:[Double]) {
+            self.score = score
+            self.username = username
+            self.location = location
+        }
     }
     struct RankingItem : Decodable {
         let users: [String:UserItem]
@@ -26,6 +32,10 @@ class Network {
     
     init() {
         //init connections...
+        refresh()
+    }
+    
+    func refresh(){
         getHttpData(urlAddress: data_url)
     }
 
@@ -59,7 +69,19 @@ class Network {
     }
     
     func updateScore(userName:String, score:Int) {
-        let surl = String(format: "%@/%@/%@", data_url, userName, String(score))
+        let surl = String(format: "%@/update/%@/%@", data_url, userName, String(score))
+        let url = URL(string: surl)!
+        
+        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+            guard let data = data else { return }
+            print(String(data: data, encoding: .utf8)!)
+        }
+        
+        task.resume()
+    }
+    
+    func insertUser(user:UserItem) {
+        let surl = String(format: "%@/insert/%@/0/%f/%f", data_url, user.username, user.location[0], user.location[1])
         let url = URL(string: surl)!
         
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
@@ -99,7 +121,7 @@ class Network {
             }
             else if error != nil
             {
-                print(error)
+                print(error ?? "unwrap")
             }
         }).resume()
     }

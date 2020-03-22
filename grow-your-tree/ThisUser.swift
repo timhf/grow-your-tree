@@ -11,12 +11,12 @@ import Foundation
 
 class ThisUser{
     
-    var user_name: String {
+    /*var user_name: String {
         get {
             return "test"
         }
         set {
             user_name = newValue
         }
-    }
+    }*/
 }

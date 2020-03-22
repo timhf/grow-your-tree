@@ -11,7 +11,17 @@ import UIKit
 import MapKit
 
 
-class RankingView : UIViewController, UITableViewDataSource, UITableViewDelegate {
+extension UIImage {
+    func resized(toWidth width: CGFloat) -> UIImage? {
+        let canvasSize = CGSize(width: width, height: CGFloat(ceil(width/size.width * size.height)))
+        UIGraphicsBeginImageContextWithOptions(canvasSize, false, scale)
+        defer { UIGraphicsEndImageContext() }
+        draw(in: CGRect(origin: .zero, size: canvasSize))
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+}
+
+class RankingView : UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate {
     
     @IBOutlet weak var mapview: MKMapView!
     @IBOutlet weak var table: UITableView!
@@ -24,17 +34,12 @@ class RankingView : UIViewController, UITableViewDataSource, UITableViewDelegate
         
         table.delegate = self
         table.dataSource = self
+        mapview.delegate = self
         
         //loadData()
         populateTable()
         populateMap()
     }
-    
-   /* func loadData(){
-        network = Network()
-        
-        ranking = network.getRanking(places: 5)
-    } */
     
     func populateTable(){
         self.table.reloadData()
@@ -45,6 +50,7 @@ class RankingView : UIViewController, UITableViewDataSource, UITableViewDelegate
             let coord = CLLocationCoordinate2D(latitude: user.location[0], longitude: user.location[1])
             let annotation = MKPointAnnotation()
             annotation.title = user.username
+            //annotation. = user.score
             annotation.coordinate = coord
             mapview.addAnnotation(annotation)
         }
@@ -73,5 +79,27 @@ class RankingView : UIViewController, UITableViewDataSource, UITableViewDelegate
 
         self.mapview.setRegion(region, animated: true)
         
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return nil
+        }
+        
+        var score = 0
+        
+        for item in self.ranking {
+            if(annotation.title == item.username){
+                score = item.score
+            }
+        }
+        
+        let lvl = Level(score: score)
+        
+        let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "customannotation")
+        annotationView.image = lvl.treeImage.resized(toWidth: 30)
+        annotationView.canShowCallout = true
+        
+        return annotationView
     }
 }

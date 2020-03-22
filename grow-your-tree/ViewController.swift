@@ -21,7 +21,10 @@ extension CLLocationCoordinate2D {
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
 
+    @IBOutlet weak var navigationbar: UINavigationItem!
     @IBOutlet weak var score_label: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
+    
     
     var network : Network!
     var locationManager: CLLocationManager!
@@ -32,9 +35,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var score : Int = 0
     var internalRanking : [Network.UserItem] = []
     
-    let currentUserName = "Tim"
+    var currentUserName = "Tim"
     var delayCounter = 0
     var scoreFeteched = false
+    var userReady = false
+    var createUser = false
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +66,39 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             locationManager.startUpdatingLocation()
         }
         
+        let settings = UserDefaults.standard
+        //settings.removeObject(forKey: "username")
+        let username = settings.string(forKey: "username") ?? nil
+        if(username == nil){
+            let alert = UIAlertController(title: "Pick a name", message: "Enter your username", preferredStyle: .alert)
+            
+            alert.addTextField { (textField) in
+                textField.text = ""
+            }
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+                let textField = alert!.textFields![0]
+                print("Text field: \(String(describing: textField.text))")
+                self.currentUserName = textField.text!
+                self.userReady = true
+                self.createUser = true
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
+        }else{
+            self.userReady = true
+            self.currentUserName = username!
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     @IBAction func buttonTest(_ sender: Any) {
@@ -84,7 +123,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             let lon = settings.double(forKey: "homeLon")
             homeLocation.latitude = lat
             homeLocation.longitude = lon
+            //self.currentUserName = settings.string(forKey: "username") ?? "not found"
         }
+        if (self.createUser){
+            let user = Network.UserItem(score: 0, username: currentUserName, location: [currentLocation.latitude, currentLocation.longitude])
+            self.network.insertUser(user: user)
+            settings.set(currentUserName, forKey: "username")
+        }
+        self.network.refresh()
     }
     
     @objc func updateDisplay() {
@@ -94,7 +140,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 scoreFeteched = true
             }
             
-            score_label.text = String(format: "Score: %d", arguments: [score])
+            let lvl = Level(score: score)
+            
+            score_label.text = String(format: "Score: %d (%d)", score, lvl.level)
+            self.imageView.image = lvl.treeImage
             score += 1
             
             delayCounter += 1
@@ -104,6 +153,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         if (delayCounter > 50){
             network.updateScore(userName: currentUserName, score: score)
+            self.network.refresh()
             delayCounter = 0
         }
     }
@@ -126,6 +176,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "rankingViewSegue"){
+            self.network.refresh()
             self.internalRanking = network.getRanking(places: 5)
             // fixme perform update
             let rankingView = segue.destination as! RankingView
@@ -138,11 +189,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         print("locations = \(locValue.latitude) \(locValue.longitude)")
         currentLocation = locValue
         
-        if(locationAvailable == 0){
-            locationAvailable = 1
-            loadSettings()
-        } else {
-            updateLocation()
+        if(userReady){
+            if(locationAvailable == 0){
+                locationAvailable = 1
+                loadSettings()
+            } else {
+                updateLocation()
+            }
         }
     }
     
